@@ -4,6 +4,7 @@
   "description": "Dziki BOT v2",
   "main": "build/index.js",
   "scripts": {
+    "build": "tsc",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore"
   },
   "author": "MrDzik#8720",
