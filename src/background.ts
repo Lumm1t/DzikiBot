@@ -8,7 +8,7 @@ const bot = Classified.bot;
 
 /* eslint-disable no-case-declarations */
 
-async function getStats() {
+async function getStats(): Promise<void>{
   const STATS_NAME: string[] = [
     'data',
     'czlonkowie',
@@ -42,7 +42,7 @@ async function setStats(
   channelsID: string[],
   positions: number[],
   option: string
-) {
+): Promise<void> {
   let time = await modules.setEndingDate('0m', 'text', true);
   time = time.slice(0, 10);
   time = time.replace(/-/g, '.');
@@ -127,7 +127,7 @@ async function setStats(
   }
 }
 
-function countOnlineMembers(server: Discord.Guild) {
+function countOnlineMembers(server: Discord.Guild): number {
   return (
     server.members.cache.filter((m) => m.user.presence.status === 'online')
       .size +
@@ -137,7 +137,7 @@ function countOnlineMembers(server: Discord.Guild) {
   );
 }
 
-async function autoRemoveLimitations() {
+async function autoRemoveLimitations(): Promise<void> {
   const MINUTE_PAUSE = 60000;
 
   while (true) {
@@ -217,7 +217,7 @@ async function autoRemoveLimitations() {
   }
 }
 
-async function statusBar() {
+async function statusBar(): Promise<void> {
   while (true) {
     for (let i = 0; i < 3; i++) {
       switch (i) {
