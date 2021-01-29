@@ -8,6 +8,15 @@
   },
   "author": "MrDzik#8720",
   "license": "CC BY-NC 4.0",
+  "lint-staged": {
+    "*.{js,ts}": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
     "discord.js": "^12.5.1",
     "mysql": "^2.18.1",
@@ -16,6 +25,8 @@
     "typescript-require": "^0.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/mysql": "^2.15.15",
     "@types/node": "^14.14.7",
     "@types/validator": "^13.1.1",
@@ -25,6 +36,8 @@
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3",
     "prettier": "^2.2.1",
     "typescript": "^4.0.5"
   }
