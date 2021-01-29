@@ -8,7 +8,7 @@ const bot = Classified.bot;
 
 /* eslint-disable no-case-declarations */
 
-async function getStats(): Promise<void>{
+async function getStats(): Promise<void> {
   const STATS_NAME: string[] = [
     'data',
     'czlonkowie',
