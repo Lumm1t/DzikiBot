@@ -1,11 +1,11 @@
-import Classified from "./classified";
-const bot = Classified.bot;
+import Classified from './classified';
+import * as Seq from 'sequelize';
+
 const classified = Classified.classified;
-import * as Seq from "sequelize";
 const seq = classified.getSeq();
 
 const servers = seq.define(
-  "servers",
+  'servers',
   {
     ID: {
       type: Seq.DataTypes.INTEGER,
@@ -39,13 +39,13 @@ const servers = seq.define(
     },
   },
   {
-    tableName: "serwer",
+    tableName: 'serwer',
     timestamps: false,
   }
 );
 
 const stats = seq.define(
-  "stats",
+  'stats',
   {
     ID: {
       type: Seq.DataTypes.INTEGER,
@@ -107,12 +107,13 @@ const stats = seq.define(
     },
   },
   {
-    tableName: "statystyki",
+    tableName: 'statystyki',
     timestamps: false,
   }
 );
+
 const users = seq.define(
-  "users",
+  'users',
   {
     ID: {
       type: Seq.DataTypes.INTEGER,
@@ -146,8 +147,9 @@ const users = seq.define(
     },
   },
   {
-    tableName: "uzytkownicy",
+    tableName: 'uzytkownicy',
     timestamps: false,
   }
 );
+
 export default { servers, users, stats };

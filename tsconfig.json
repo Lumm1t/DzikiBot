@@ -1,12 +1,13 @@
 {
-  "compilerOptions": {                          
-    "module": "commonjs",                     
+  "compilerOptions": {
+    "module": "commonjs",
     "allowJs": true,
-    "outDir": "build",                          
+    "outDir": "build",
     "rootDir": "src",
-    "strict": true,         
+    "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": ["./src/**/*"]
 }

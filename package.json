@@ -4,15 +4,21 @@
   "description": "Dziki BOT v2",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore"
   },
   "author": "MrDzik#8720",
   "license": "CC BY-NC 4.0",
+  "lint-staged": {
+    "*.{js,ts}": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
   "dependencies": {
-    "@types/mysql": "^2.15.15",
-    "@types/node": "^14.14.7",
-    "@types/validator": "^13.1.1",
-    "@types/ws": "^7.4.0",
     "discord.js": "^12.5.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
@@ -20,6 +26,20 @@
     "typescript-require": "^0.3.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/mysql": "^2.15.15",
+    "@types/node": "^14.14.7",
+    "@types/validator": "^13.1.1",
+    "@types/ws": "^7.4.0",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3",
+    "prettier": "^2.2.1",
     "typescript": "^4.0.5"
   }
 }
