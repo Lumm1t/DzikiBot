@@ -1,0 +1,25 @@
+{
+  "name": "discordbot-v2",
+  "version": "2.0.0",
+  "description": "Dziki BOT v2",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MrDzik#8720",
+  "license": "CC BY-NC 4.0",
+  "dependencies": {
+    "@types/mysql": "^2.15.15",
+    "@types/node": "^14.14.7",
+    "@types/validator": "^13.1.1",
+    "@types/ws": "^7.4.0",
+    "discord.js": "^12.5.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "typescript-require": "^0.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  }
+}
