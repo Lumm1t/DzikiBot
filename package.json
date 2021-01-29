@@ -4,7 +4,7 @@
   "description": "Dziki BOT v2",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore"
   },
   "author": "MrDzik#8720",
   "license": "CC BY-NC 4.0",
@@ -20,6 +20,12 @@
     "typescript-require": "^0.3.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1",
     "typescript": "^4.0.5"
   }
 }
