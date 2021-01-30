@@ -220,10 +220,11 @@ const database = {
       if (user) {
         if (warnCount == 0) {
           user.set('data_zakonczenia', 0);
+          user.set('ilosc_warnow', 0);
         } else {
           user.set('data_zakonczenia', ending);
+          user.set('ilosc_warnow', warnCount);
         }
-        user.set('ilosc_warnow', warnCount);
         user.save();
       }
     });
@@ -273,6 +274,7 @@ const database = {
     });
     return new Promise((resolve, reject) => {
       const insertStat = (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         statistics: Seq.Model<any, any>,
         channelId: string,
         position: number,
