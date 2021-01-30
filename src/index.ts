@@ -25,7 +25,7 @@ enum EndingMessage {
   BlacklistNullException = 'Nie dodałeś jeszcze żadnego kanału do blacklisty',
 }
 bot.on('message', (msg) => {
-  if (msg.content.startsWith('$') && !msg.member!.user.bot) {
+  if (msg.content.startsWith('!') && !msg.member!.user.bot) {
     msgProcessor(msg);
   }
 });
