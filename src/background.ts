@@ -218,11 +218,13 @@ async function autoRemoveLimitations() {
 }
 
 async function statusBar() {
+  const BOT_VERSION = process.env.npm_package_version;
+
   while (true) {
     for (let i = 0; i < 3; i++) {
       switch (i) {
         case 0:
-          bot.user?.setActivity('🛠️Wersja: 2.0 beta');
+          bot.user?.setActivity(`🛠️Wersja: ${BOT_VERSION}`);
           break;
 
         case 1:

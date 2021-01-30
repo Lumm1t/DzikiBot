@@ -1,10 +1,11 @@
 {
   "name": "discordbot-v2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Dziki BOT v2",
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
+    "start": "node .",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore"
   },
   "author": "MrDzik#8720",
