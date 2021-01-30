@@ -219,7 +219,7 @@ async function autoRemoveLimitations(): Promise<void> {
 
 async function statusBar(): Promise<void> {
   const BOT_VERSION = process.env.npm_package_version;
-            
+
   while (true) {
     for (let i = 0; i < 3; i++) {
       switch (i) {
@@ -268,15 +268,19 @@ const background = {
 
   async animation(msg: Discord.Message): Promise<void> {
     let dynamicText: string;
+
     dynamicText = '✨ Dziki ✨';
     msg.edit(dynamicText);
     await modules.delay(3000);
+
     dynamicText = '✨ BOT ✨';
     msg.edit(dynamicText);
     await modules.delay(3000);
+
     dynamicText = '✨Dziki BOT';
     msg.edit(dynamicText);
     await modules.delay(3000);
+
     for (let i = 15; i > 0; i--) {
       dynamicText = dynamicText.slice(1, dynamicText.length);
       msg.edit(dynamicText);
