@@ -222,7 +222,7 @@ async function statusBar(): Promise<void> {
     for (let i = 0; i < 3; i++) {
       switch (i) {
         case 0:
-          bot.user?.setActivity('🛠️Wersja: 2.0 beta');
+          bot.user?.setActivity('🛠️Wersja: 2.1');
           break;
 
         case 1:
