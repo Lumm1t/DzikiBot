@@ -23,6 +23,8 @@ enum EndingMessage {
   BlacklistChannelNotInDB = 'Kanał nie znajduję się w bazie danych',
   BlacklistChannelAdded = 'Kanał pomyślnie został dodany do blacklisty',
   BlacklistNullException = 'Nie dodałeś jeszcze żadnego kanału do blacklisty',
+  MentionArgException = 'Nie podałeś ile razy mam kogoś oznaczyć.',
+  MentionNumberException = 'Podana liczba musi być w przedziale [1-99] albo to co podałeś nie jest liczbą',
 }
 bot.on('message', (msg) => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {
@@ -377,7 +379,29 @@ async function msgProcessor(msg: Discord.Message) {
             throw EndingMessage.BlacklistArgsException;
         }
         break;
-
+      case 'mention':
+        const member = msg.mentions.members?.first();
+        if (!msgAuthor.hasPermission('ADMINISTRATOR')) {
+          throw EndingMessage.NoPermissions;
+        }
+        if (!member) {
+          throw EndingMessage.IncorrectUserData;
+        }
+        if (!args[2]) {
+          throw EndingMessage.MentionArgException;
+        }
+        if (!/^[1-9][0-9]?$/i.test(args[2])) {
+          throw EndingMessage.MentionNumberException;
+        }
+        let reason = '';
+        for (let i = 3; i < args.length; i++) {
+          reason += args[i] + ' ';
+        }
+        for (let i = 0; i < Number(args[2]); i++) {
+          msg.channel.send(`${member} ${reason}`);
+          await modules.delay(2000);
+        }
+        break;
       case 'ogłoś':
         if (msg.member!.id == '355043764861140993') {
           let reason = '';

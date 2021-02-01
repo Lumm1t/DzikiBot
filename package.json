@@ -1,6 +1,6 @@
 {
   "name": "discordbot-v2",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Dziki BOT v2",
   "main": "build/index.js",
   "scripts": {
