@@ -26,7 +26,7 @@ enum EndingMessage {
   MentionArgException = 'Nie podałeś ile razy mam kogoś oznaczyć.',
   MentionNumberException = 'Podana liczba musi być w przedziale [1-99] albo to co podałeś nie jest liczbą',
 }
-bot.on('message', msg => {
+bot.on('message', (msg) => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {
     msgProcessor(msg);
   }
@@ -123,7 +123,7 @@ async function msgProcessor(msg: Discord.Message) {
         break;
 
       case 'mute': {
-        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -152,7 +152,7 @@ async function msgProcessor(msg: Discord.Message) {
       }
 
       case 'unmute': {
-        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -201,7 +201,7 @@ async function msgProcessor(msg: Discord.Message) {
         break;
 
       case 'warn': {
-        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
