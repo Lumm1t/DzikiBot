@@ -17,7 +17,7 @@ Komendy
   - $unmute @ktoś - odmutowuje daną osobe - wymaga uprawnienia: 'MANAGE_MESSAGES' - wymaga uprawnienia: 'MANAGE_MESSAGES'.
   - $mutetime ~czas - ustawia czas mute po osiągnięciu 3 warnów przez użytkownika, ustaw '0m' by wyłączyć muta. - wymaga uprawnienia: 'administrator'.
   - $warn @ktoś ?powód - warnuje danego używkonika po 3 warnach zostaje zmutowany na czas określony przez użytkownika przy komendzie $mutetime, domyślnie 12 godzin - wymaga uprawnienia: 'MANAGE_MESSAGES'.
-  - $statysyki [data/czlonkowie/online/rekord_online/bany/dzien] ID_Kanału_Głosowego - ustawia wybraną statystykę na wybrany kanał pamiętaj by w nazwie kanału dać $ w jego miejsce pojawi się wybrana rzecz - wymaga uprawnienia: 'administrator'
+  - $statystyki [data/czlonkowie/online/rekord_online/bany/dzien] ID_Kanału_Głosowego - ustawia wybraną statystykę na wybrany kanał pamiętaj by w nazwie kanału dać $ w jego miejsce pojawi się wybrana rzecz - wymaga uprawnienia: 'administrator'
   - $mention @ktos [1-99] ?tekst - wysyła co 2 sekundy ping z wiadomością nadaną przez użytkownika - wymaga uprawnienia: 'administrator'
   
   
