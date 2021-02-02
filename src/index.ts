@@ -14,7 +14,7 @@ enum EndingMessage {
   NoPermissionOrUserIsAdmin = 'Nie masz uprawnień lub osoba jest administratorem.',
   IncorrectUserData = 'Nie podano użytkownika lub go nie znaleziono :c',
   MutedRoleNotFound = "Nie znaleziono roli 'Muted', stwórz ją żebym mógł wykonać swoje zadanie.",
-  NoAccessToLogChannel = 'Kanał z publicznymi logami nie istnieje lub nie mam do niego dostępu, żebym mógł pracować musisz to naprawić.',
+  NoAccessToLogChannel = 'Kanał z publicznymi logami nie istnieje lub nie mam do niego dostępu, żebym mógł pracować musisz to naprawić. Jeśli nie wiesz jak to zrobić wpisz $pomoc',
   SuccessfulSetPublicLogs = 'Udane ustawienie publicznych logów na kanał: ',
   BlacklistArgsException = 'komenda blacklist przyjmuje 3 arugmenty: list, dodaj, usun',
   BlacklistLengthException = 'Osiągnąłeś limit kanałów w blackliście (50), spróbuj usunąć jakieś kanały z blacklisty',
@@ -25,6 +25,7 @@ enum EndingMessage {
   BlacklistNullException = 'Nie dodałeś jeszcze żadnego kanału do blacklisty',
   MentionArgException = 'Nie podałeś ile razy mam kogoś oznaczyć.',
   MentionNumberException = 'Podana liczba musi być w przedziale [1-99] albo to co podałeś nie jest liczbą',
+  DocsMessage = 'Wszelkie komendy i ich zastosowanie możesz znaleźć tutaj: https://github.com/MrDzik/DzikiBot/blob/main/README.md',
 }
 bot.on('message', (msg) => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {
@@ -52,10 +53,6 @@ async function msgProcessor(msg: Discord.Message) {
     const channelID = await database.getLogChannel(msg.guild!.id);
     const channel = bot.channels.cache.get(channelID);
 
-    if (channel == undefined && args[0] != 'publicznelogi') {
-      throw EndingMessage.NoAccessToLogChannel;
-    }
-
     if (args[0] == 'publicznelogi') {
       if (!msg.member!.hasPermission('ADMINISTRATOR')) {
         throw EndingMessage.NoPermissions;
@@ -69,8 +66,13 @@ async function msgProcessor(msg: Discord.Message) {
 
       database.setPublicLogs(msg, channel);
       throw EndingMessage.SuccessfulSetPublicLogs + channel.name;
+    } else if (args[0] == 'pomoc' || args[0] == 'help') {
+      throw EndingMessage.DocsMessage;
     }
 
+    if (channel == undefined) {
+      throw EndingMessage.NoAccessToLogChannel;
+    }
     const publicLogChannel = channel as Discord.TextChannel;
     switch (args[0]) {
       case 'kick':
