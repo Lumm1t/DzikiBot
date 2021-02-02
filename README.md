@@ -14,9 +14,9 @@ Komendy
   - $ban @ktoś ?powód - pemamentnie banuje daną osobę i jeśli powód został wpisany wyświetli go jeśli nie, wyświetli "Nie podano powodu", taka sama wiadomość zostanie dostarczona do osoby która została zbanowana - wymaga uprawnienia: 'BAN_MEMBERS' jak również osoba banowana nie może być administratorem.
   - $tempaban @ktoś ~czas ?powód - tymczasowo banuję daną osobę. Definicja czasu znajduje się na samym dole tego tesktu. Jeśli powód został wpisany wyświetli go jeśli nie, wyświetli "Nie podano powodu", taka sama wiadomość zostanie dostarczona do osoby która została zbanowana - wymaga uprawnienia: 'KICK_MEMBERS' jak również osoba banowana nie może być administratorem.
   - $mute @ktoś ?~czas ?powód - tymczasowo lub permamentnie mutuje daną osobę, wyświetla powód jeśli istnieje - wymaga uprawnienia: 'MANAGE_MESSAGES'.
-  - $unmute @ktoś - odmutowuje daną osobe - wymaga uprawnienia: 'MANAGE_MESSAGES'.
+  - $unmute @ktoś - odmutowuje daną osobe - wymaga uprawnienia: 'MANAGE_MESSAGES' - wymaga uprawnienia: 'MANAGE_MESSAGES'.
   - $mutetime ~czas - ustawia czas mute po osiągnięciu 3 warnów przez użytkownika, ustaw '0m' by wyłączyć muta. - wymaga uprawnienia: 'administrator'.
-  - $warn @ktoś ?powód - warnuje danego używkonika po 3 warnach zostaje zmutowany na czas określony przez użytkownika przy komendzie $mutetime, domyślnie 12 godzin
+  - $warn @ktoś ?powód - warnuje danego używkonika po 3 warnach zostaje zmutowany na czas określony przez użytkownika przy komendzie $mutetime, domyślnie 12 godzin - wymaga uprawnienia: 'MANAGE_MESSAGES'.
   - $statysyki [data/czlonkowie/online/rekord_online/bany/dzien] ID_Kanału_Głosowego - ustawia wybraną statystykę na wybrany kanał pamiętaj by w nazwie kanału dać $ w jego miejsce pojawi się wybrana rzecz - wymaga uprawnienia: 'administrator'
   - $mention @ktos [1-99] ?tekst - wysyła co 2 sekundy ping z wiadomością nadaną przez użytkownika - wymaga uprawnienia: 'administrator'
   
