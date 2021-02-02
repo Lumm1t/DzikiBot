@@ -138,7 +138,7 @@ const modules = {
     });
   },
   delay(ms: number): Promise<unknown> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(resolve, ms);
     });
   },

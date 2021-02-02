@@ -27,7 +27,7 @@ enum EndingMessage {
   MentionNumberException = 'Podana liczba musi być w przedziale [1-99] albo to co podałeś nie jest liczbą',
   DocsMessage = 'Wszelkie komendy i ich zastosowanie możesz znaleźć tutaj: https://github.com/MrDzik/DzikiBot/blob/main/README.md',
 }
-bot.on('message', (msg) => {
+bot.on('message', msg => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {
     msgProcessor(msg);
   }
@@ -125,7 +125,7 @@ async function msgProcessor(msg: Discord.Message) {
         break;
 
       case 'mute': {
-        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -154,7 +154,7 @@ async function msgProcessor(msg: Discord.Message) {
       }
 
       case 'unmute': {
-        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -203,7 +203,7 @@ async function msgProcessor(msg: Discord.Message) {
         break;
 
       case 'warn': {
-        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -318,7 +318,7 @@ async function msgProcessor(msg: Discord.Message) {
               let message = 'NUMER : ID : NAZWA\n';
               let i = 1;
               const MESSAGE_LENGTH_LIMIT = 25;
-              channels.forEach((channelID) => {
+              channels.forEach(channelID => {
                 const channel = msg.guild!.channels.cache.get(
                   channelID
                 ) as Discord.TextChannel;
@@ -412,7 +412,7 @@ async function msgProcessor(msg: Discord.Message) {
           }
           const serversRow = await database.Announcement();
           const servers = serversRow.split(':');
-          servers.forEach((element) => {
+          servers.forEach(element => {
             const args = element.split(',');
             const serverID = args[0];
             const channelID = args[1];

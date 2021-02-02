@@ -29,7 +29,7 @@ const database = {
       },
     });
 
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (guild) {
         const channelID = guild.get('logi') as string;
         resolve(channelID);
@@ -46,7 +46,7 @@ const database = {
       },
     });
 
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (guild) {
         const channelID = guild.get('logi2') as string;
         resolve(channelID);
@@ -84,7 +84,7 @@ const database = {
         uzytkownik: newMember.id,
       },
     });
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (user) {
         const date = user.get('data_zakonczenia_muta') as string;
         console.log(date);
@@ -122,7 +122,7 @@ const database = {
         data_zakonczenia_muta: ending,
       },
     });
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       user.set('data_zakonczenia_muta', ending);
       user.save();
       resolve('');
@@ -156,7 +156,7 @@ const database = {
         data_zakonczenia_bana: ending,
       },
     });
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (user) {
         user.set('data_zakonczenia_bana', ending);
         user.save();
@@ -191,7 +191,7 @@ const database = {
         data_zakonczenia: ending,
       },
     });
-    return new Promise<number>((resolve) => {
+    return new Promise<number>(resolve => {
       if (user) {
         let warnCount = user.get('ilosc_warnow') as number;
         warnCount++;
@@ -236,7 +236,7 @@ const database = {
         serwer: msg.guild!.id,
       },
     });
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (guild) {
         const time = guild.get('warn') as string;
         resolve(time);
@@ -250,7 +250,7 @@ const database = {
         serwer: msg.guild!.id,
       },
     });
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (guild) {
         guild.set('warn', args[1]);
         guild.save();
@@ -366,13 +366,13 @@ const database = {
       },
     });
     let i = 0;
-    statistics.forEach((element) => {
+    statistics.forEach(element => {
       serverID[i] = element.get('serwer') as string;
       channelID[i] = element.get(option) as string;
       position[i] = element.get(name) as number;
       ++i;
     });
-    return new Promise<[string[], string[], number[]]>((resolve) => {
+    return new Promise<[string[], string[], number[]]>(resolve => {
       resolve([serverID, channelID, position]);
     });
   },
@@ -383,7 +383,7 @@ const database = {
         serwer: server.id,
       },
     });
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       if (guild) {
         const channels = guild.get('blacklist') as string;
         resolve(channels);
@@ -411,11 +411,11 @@ const database = {
         logi2: { [Seq.Op.ne]: null },
       },
     });
-    guilds.forEach((data) => {
+    guilds.forEach(data => {
       server += data.get('serwer') + ',' + data.get('logi2') + ':';
     });
 
-    return new Promise<string>((resolve) => {
+    return new Promise<string>(resolve => {
       server = server.slice(0, -1);
       resolve(server);
     });
@@ -434,13 +434,13 @@ const database = {
       },
     });
     let i = 0;
-    users.forEach((element) => {
+    users.forEach(element => {
       serversID[i] = element.get('serwer') as string;
       usersID[i] = element.get('uzytkownik') as string;
       warnsCount[i] = element.get('ilosc_warnow') as number;
       ++i;
     });
-    return new Promise<[string[], string[], number[]]>((resolve) => {
+    return new Promise<[string[], string[], number[]]>(resolve => {
       resolve([serversID, usersID, warnsCount]);
     });
   },
@@ -457,12 +457,12 @@ const database = {
       },
     });
     let i = 0;
-    users.forEach((element) => {
+    users.forEach(element => {
       serversID[i] = element.get('serwer') as string;
       usersID[i] = element.get('uzytkownik') as string;
       ++i;
     });
-    return new Promise<[string[], string[]]>((resolve) => {
+    return new Promise<[string[], string[]]>(resolve => {
       resolve([serversID, usersID]);
     });
   },
@@ -479,12 +479,12 @@ const database = {
       },
     });
     let i = 0;
-    users.forEach((element) => {
+    users.forEach(element => {
       serversID[i] = element.get('serwer') as string;
       usersID[i] = element.get('uzytkownik') as string;
       ++i;
     });
-    return new Promise<[string[], string[]]>((resolve) => {
+    return new Promise<[string[], string[]]>(resolve => {
       resolve([serversID, usersID]);
     });
   },

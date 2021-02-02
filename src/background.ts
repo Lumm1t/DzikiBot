@@ -80,7 +80,7 @@ async function setStats(
 
           case 'czlonkowie':
             let members = server.members.cache.size;
-            const botMembers = server.members.cache.filter((m) => m.user.bot)
+            const botMembers = server.members.cache.filter(m => m.user.bot)
               .size;
             members -= botMembers;
             name += members;
@@ -129,11 +129,10 @@ async function setStats(
 
 function countOnlineMembers(server: Discord.Guild): number {
   return (
-    server.members.cache.filter((m) => m.user.presence.status === 'online')
-      .size +
-    server.members.cache.filter((m) => m.user.presence.status === 'dnd').size +
-    server.members.cache.filter((m) => m.user.presence.status === 'idle').size -
-    server.members.cache.filter((m) => m.user.bot).size
+    server.members.cache.filter(m => m.user.presence.status === 'online').size +
+    server.members.cache.filter(m => m.user.presence.status === 'dnd').size +
+    server.members.cache.filter(m => m.user.presence.status === 'idle').size -
+    server.members.cache.filter(m => m.user.bot).size
   );
 }
 
@@ -170,12 +169,12 @@ async function autoRemoveLimitations(): Promise<void> {
             const user = server.members.cache.get(usersID[i]);
 
             if (user) {
-              const role = server.roles.cache.filter((r) => r.name === 'Muted');
+              const role = server.roles.cache.filter(r => r.name === 'Muted');
 
               if (role) {
                 database.unmute(user);
                 user.roles.remove(role);
-                database.getLogChannel(server.id).then((channelID) => {
+                database.getLogChannel(server.id).then(channelID => {
                   const publicLogChannel = server!.channels.cache.get(
                     channelID
                   ) as Discord.TextChannel;
@@ -257,7 +256,7 @@ const background = {
 
   drd(oldMessage: Discord.Message, newMessage: string): void {
     try {
-      oldMessage.reply(newMessage).then((message) => {
+      oldMessage.reply(newMessage).then(message => {
         oldMessage.delete();
         background.waitAndDelete(message, 10000);
       });
@@ -294,12 +293,12 @@ const background = {
     subject: Discord.GuildMember,
     option: number
   ): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
+    return new Promise<boolean>(resolve => {
       let delivered: boolean;
 
       switch (option) {
         case 1:
-          messages.kickDMMessage(msg, args, subject).then((kickMessage) => {
+          messages.kickDMMessage(msg, args, subject).then(kickMessage => {
             subject
               .send(kickMessage)
               .then(() => {
@@ -314,7 +313,7 @@ const background = {
           break;
 
         case 2:
-          messages.banDMMessage(msg, args, subject).then((kickMessage) => {
+          messages.banDMMessage(msg, args, subject).then(kickMessage => {
             subject
               .send(kickMessage)
               .then(() => {
@@ -329,20 +328,18 @@ const background = {
           break;
 
         case 3:
-          messages
-            .tempBanDMMessage(msg, args, subject)
-            .then((tempBanMessage) => {
-              subject
-                .send(tempBanMessage)
-                .then(() => {
-                  delivered = true;
-                  resolve(delivered);
-                })
-                .catch(() => {
-                  delivered = false;
-                  resolve(delivered);
-                });
-            });
+          messages.tempBanDMMessage(msg, args, subject).then(tempBanMessage => {
+            subject
+              .send(tempBanMessage)
+              .then(() => {
+                delivered = true;
+                resolve(delivered);
+              })
+              .catch(() => {
+                delivered = false;
+                resolve(delivered);
+              });
+          });
           break;
       }
     });
@@ -353,31 +350,31 @@ const background = {
   },
 };
 
-bot.on('guildMemberAdd', (newMember) => {
+bot.on('guildMemberAdd', newMember => {
   const server = newMember.guild;
 
   database.muteCheck(newMember).then(() => {
-    const role = server.roles.cache.find((r) => r.name === 'Muted');
+    const role = server.roles.cache.find(r => r.name === 'Muted');
     if (role) {
       newMember.roles.add(role);
     }
   });
 
-  database.getPrivateLogChannel(server.id).then((channelID) => {
+  database.getPrivateLogChannel(server.id).then(channelID => {
     const logChannel = server.channels.cache.get(
       channelID
     ) as Discord.TextChannel;
     if (logChannel) {
-      messages.joinLogsMessage(newMember).then((joinMessage) => {
+      messages.joinLogsMessage(newMember).then(joinMessage => {
         logChannel.send(joinMessage);
       });
     }
   });
 });
 
-bot.on('guildMemberRemove', (oldMember) => {
+bot.on('guildMemberRemove', oldMember => {
   const server = oldMember.guild;
-  database.getPrivateLogChannel(server.id).then((channelID) => {
+  database.getPrivateLogChannel(server.id).then(channelID => {
     const logChannel = server.channels.cache.get(
       channelID
     ) as Discord.TextChannel;
@@ -385,7 +382,7 @@ bot.on('guildMemberRemove', (oldMember) => {
     if (logChannel) {
       messages
         .leaveLogsMessage(oldMember as Discord.GuildMember)
-        .then((leaveMessage) => {
+        .then(leaveMessage => {
           logChannel.send(leaveMessage);
         });
     }
@@ -405,7 +402,7 @@ bot.on('messageUpdate', async (oldMessage, newMessage) => {
       channels.indexOf(oldMessage.channel.id) == -1
     ) {
       const server = newMessage.guild;
-      database.getPrivateLogChannel(server!.id).then((channelID) => {
+      database.getPrivateLogChannel(server!.id).then(channelID => {
         const logChannel = server!.channels.cache.get(
           channelID
         ) as Discord.TextChannel;
@@ -416,7 +413,7 @@ bot.on('messageUpdate', async (oldMessage, newMessage) => {
               oldMessage as Discord.Message,
               newMessage as Discord.Message
             )
-            .then((editMessage) => {
+            .then(editMessage => {
               logChannel.send(editMessage);
             });
         }
@@ -426,7 +423,7 @@ bot.on('messageUpdate', async (oldMessage, newMessage) => {
     if (oldMessage.channel.type != 'dm' && !oldMessage.author!.bot) {
       const server = newMessage.guild;
 
-      database.getPrivateLogChannel(server!.id).then((channelID) => {
+      database.getPrivateLogChannel(server!.id).then(channelID => {
         const logChannel = server!.channels.cache.get(
           channelID
         ) as Discord.TextChannel;
@@ -437,7 +434,7 @@ bot.on('messageUpdate', async (oldMessage, newMessage) => {
               oldMessage as Discord.Message,
               newMessage as Discord.Message
             )
-            .then((editMessage) => {
+            .then(editMessage => {
               logChannel.send(editMessage);
             });
         }
@@ -446,7 +443,7 @@ bot.on('messageUpdate', async (oldMessage, newMessage) => {
   }
 });
 
-bot.on('messageDelete', async (deletedMessage) => {
+bot.on('messageDelete', async deletedMessage => {
   const channelsList = await database.getBlacklist(deletedMessage.guild!);
 
   if (channelsList) {
@@ -459,14 +456,14 @@ bot.on('messageDelete', async (deletedMessage) => {
       channels.indexOf(deletedMessage.channel.id) == -1
     ) {
       const server = deletedMessage.guild;
-      database.getPrivateLogChannel(server!.id).then((channelID) => {
+      database.getPrivateLogChannel(server!.id).then(channelID => {
         const logchannel = server!.channels.cache.get(
           channelID
         ) as Discord.TextChannel;
         if (logchannel) {
           messages
             .deleteLogsMessage(deletedMessage as Discord.Message)
-            .then((deleteMessage) => {
+            .then(deleteMessage => {
               logchannel.send(deleteMessage);
             });
         }
@@ -476,7 +473,7 @@ bot.on('messageDelete', async (deletedMessage) => {
     if (deletedMessage.channel.type != 'dm' && !deletedMessage.author!.bot) {
       const server = deletedMessage.guild;
 
-      database.getPrivateLogChannel(server!.id).then((channelID) => {
+      database.getPrivateLogChannel(server!.id).then(channelID => {
         const logchannel = server!.channels.cache.get(
           channelID
         ) as Discord.TextChannel;
@@ -484,7 +481,7 @@ bot.on('messageDelete', async (deletedMessage) => {
         if (logchannel) {
           messages
             .deleteLogsMessage(deletedMessage as Discord.Message)
-            .then((deleteMessage) => {
+            .then(deleteMessage => {
               logchannel.send(deleteMessage);
             });
         }
