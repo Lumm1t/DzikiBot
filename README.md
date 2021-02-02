@@ -22,3 +22,4 @@ Komendy
   
   
 czas - [1-99]m/h/d - najpierw podajemy liczbę od 1-99 następnie bez spacji wpisujemy 'm' dla minut, 'h' dla godzin i 'd' dla dni.
+? jeśli znak zapytania pojawia się przed zmienna oznacza to że jest ona opcjonalna.
