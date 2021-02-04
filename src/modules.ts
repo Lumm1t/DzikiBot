@@ -25,10 +25,11 @@ const modules = {
           'Zły czas, pamiętaj że długość może się składać max z 2 liczb i jednej litery.';
         reject(result);
       } else {
-        if (
-          (allow0 == false && /^[1-9][0-9]?[mhd]$/i.test(arg)) ||
-          (allow0 == true && /^[0-9][0-9]?[mhd]$/i.test(arg))
-        ) {
+        // eslint-disable-next-line no-empty
+        if (allow0 == false && /^[1-9][0-9]?[mhd]$/i.test(arg)) {
+          // eslint-disable-next-line no-empty
+        } else if (allow0 == true && /^[0-9][0-9]?[mhd]$/i.test(arg)) {
+        } else {
           result = 'Podałeś zły czas!';
           reject(result);
         }
@@ -137,7 +138,7 @@ const modules = {
     });
   },
   delay(ms: number): Promise<unknown> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(resolve, ms);
     });
   },

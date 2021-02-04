@@ -14,7 +14,7 @@ enum EndingMessage {
   NoPermissionOrUserIsAdmin = 'Nie masz uprawnień lub osoba jest administratorem.',
   IncorrectUserData = 'Nie podano użytkownika lub go nie znaleziono :c',
   MutedRoleNotFound = "Nie znaleziono roli 'Muted', stwórz ją żebym mógł wykonać swoje zadanie.",
-  NoAccessToLogChannel = 'Kanał z publicznymi logami nie istnieje lub nie mam do niego dostępu, żebym mógł pracować musisz to naprawić.',
+  NoAccessToLogChannel = 'Kanał z publicznymi logami nie istnieje lub nie mam do niego dostępu, żebym mógł pracować musisz to naprawić. Jeśli nie wiesz jak to zrobić wpisz $pomoc',
   SuccessfulSetPublicLogs = 'Udane ustawienie publicznych logów na kanał: ',
   BlacklistArgsException = 'komenda blacklist przyjmuje 3 arugmenty: list, dodaj, usun',
   BlacklistLengthException = 'Osiągnąłeś limit kanałów w blackliście (50), spróbuj usunąć jakieś kanały z blacklisty',
@@ -23,8 +23,11 @@ enum EndingMessage {
   BlacklistChannelNotInDB = 'Kanał nie znajduję się w bazie danych',
   BlacklistChannelAdded = 'Kanał pomyślnie został dodany do blacklisty',
   BlacklistNullException = 'Nie dodałeś jeszcze żadnego kanału do blacklisty',
+  MentionArgException = 'Nie podałeś ile razy mam kogoś oznaczyć.',
+  MentionNumberException = 'Podana liczba musi być w przedziale [1-99] albo to co podałeś nie jest liczbą',
+  DocsMessage = 'Wszelkie komendy i ich zastosowanie możesz znaleźć tutaj: https://github.com/MrDzik/DzikiBot/blob/main/README.md',
 }
-bot.on('message', (msg) => {
+bot.on('message', msg => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {
     msgProcessor(msg);
   }
@@ -50,10 +53,6 @@ async function msgProcessor(msg: Discord.Message) {
     const channelID = await database.getLogChannel(msg.guild!.id);
     const channel = bot.channels.cache.get(channelID);
 
-    if (channel == undefined && args[0] != 'publicznelogi') {
-      throw EndingMessage.NoAccessToLogChannel;
-    }
-
     if (args[0] == 'publicznelogi') {
       if (!msg.member!.hasPermission('ADMINISTRATOR')) {
         throw EndingMessage.NoPermissions;
@@ -67,8 +66,13 @@ async function msgProcessor(msg: Discord.Message) {
 
       database.setPublicLogs(msg, channel);
       throw EndingMessage.SuccessfulSetPublicLogs + channel.name;
+    } else if (args[0] == 'pomoc' || args[0] == 'help') {
+      throw EndingMessage.DocsMessage;
     }
 
+    if (channel == undefined) {
+      throw EndingMessage.NoAccessToLogChannel;
+    }
     const publicLogChannel = channel as Discord.TextChannel;
     switch (args[0]) {
       case 'kick':
@@ -121,7 +125,7 @@ async function msgProcessor(msg: Discord.Message) {
         break;
 
       case 'mute': {
-        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -150,7 +154,7 @@ async function msgProcessor(msg: Discord.Message) {
       }
 
       case 'unmute': {
-        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -199,7 +203,7 @@ async function msgProcessor(msg: Discord.Message) {
         break;
 
       case 'warn': {
-        const role = msg.guild!.roles.cache.find((r) => r.name === 'Muted');
+        const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
         if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
           throw EndingMessage.NoPermissions;
         }
@@ -314,7 +318,7 @@ async function msgProcessor(msg: Discord.Message) {
               let message = 'NUMER : ID : NAZWA\n';
               let i = 1;
               const MESSAGE_LENGTH_LIMIT = 25;
-              channels.forEach((channelID) => {
+              channels.forEach(channelID => {
                 const channel = msg.guild!.channels.cache.get(
                   channelID
                 ) as Discord.TextChannel;
@@ -377,7 +381,29 @@ async function msgProcessor(msg: Discord.Message) {
             throw EndingMessage.BlacklistArgsException;
         }
         break;
-
+      case 'mention':
+        const member = msg.mentions.members?.first();
+        if (!msgAuthor.hasPermission('ADMINISTRATOR')) {
+          throw EndingMessage.NoPermissions;
+        }
+        if (!member) {
+          throw EndingMessage.IncorrectUserData;
+        }
+        if (!args[2]) {
+          throw EndingMessage.MentionArgException;
+        }
+        if (!/^[1-9][0-9]?$/i.test(args[2])) {
+          throw EndingMessage.MentionNumberException;
+        }
+        let reason = '';
+        for (let i = 3; i < args.length; i++) {
+          reason += args[i] + ' ';
+        }
+        for (let i = 0; i < Number(args[2]); i++) {
+          msg.channel.send(`${member} ${reason}`);
+          await modules.delay(2000);
+        }
+        break;
       case 'ogłoś':
         if (msg.member!.id == '355043764861140993') {
           let reason = '';
@@ -386,7 +412,7 @@ async function msgProcessor(msg: Discord.Message) {
           }
           const serversRow = await database.Announcement();
           const servers = serversRow.split(':');
-          servers.forEach((element) => {
+          servers.forEach(element => {
             const args = element.split(',');
             const serverID = args[0];
             const channelID = args[1];
