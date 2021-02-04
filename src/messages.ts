@@ -15,7 +15,7 @@ const messages = {
     subject: Discord.GuildMember,
     delivered: boolean
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       const del: string = this.getDMEmojiStatus(delivered);
       for (let i = 2; i < args.length; i++) {
@@ -46,7 +46,7 @@ const messages = {
     subject: Discord.GuildMember,
     delivered: boolean
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       const del: string = this.getDMEmojiStatus(delivered);
       for (let i = 2; i < args.length; i++) {
@@ -75,7 +75,7 @@ const messages = {
     msg: Discord.Message,
     subject: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       const muteMessage = new Discord.MessageEmbed()
         .setColor('#f78707')
         .setTitle('Perm mute')
@@ -94,7 +94,7 @@ const messages = {
     args: string[],
     subject: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       for (let i = 3; i < args.length; i++) {
         reason += args[i] + ' ';
@@ -102,7 +102,7 @@ const messages = {
       if (reason.length < 1) {
         reason = 'Nie podano powodu.';
       }
-      modules.setEndingDate(args[2], 'text', false).then((ending) => {
+      modules.setEndingDate(args[2], 'text', false).then(ending => {
         const muteMessage = new Discord.MessageEmbed()
           .setColor('#f78707')
           .setTitle('Mute')
@@ -130,7 +130,7 @@ const messages = {
     subject: Discord.GuildMember,
     delivered: boolean
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       const del: string = this.getDMEmojiStatus(delivered);
       for (let i = 3; i < args.length; i++) {
@@ -139,7 +139,7 @@ const messages = {
       if (reason.length < 1) {
         reason = 'Nie podano powodu.';
       }
-      modules.setEndingDate(args[2], 'text', false).then((ending) => {
+      modules.setEndingDate(args[2], 'text', false).then(ending => {
         const tempBanMessage = new Discord.MessageEmbed()
           .setColor('#f70707')
           .setTitle('Tempban')
@@ -169,7 +169,7 @@ const messages = {
     warnCount: number,
     muteTime: string
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       for (let i = 2; i < args.length; i++) {
         reason += args[i] + ' ';
@@ -199,7 +199,7 @@ const messages = {
     args: string[],
     subject: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       for (let i = 2; i < args.length; i++) {
         reason += args[i] + ' ';
@@ -230,7 +230,7 @@ const messages = {
     args: string[],
     subject: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       for (let i = 2; i < args.length; i++) {
         reason += args[i] + ' ';
@@ -264,7 +264,7 @@ const messages = {
     subject: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
     const endingDate = await modules.setEndingDate(args[2], 'text', false);
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let reason = '';
       for (let i = 3; i < args.length; i++) {
         reason += args[i] + ' ';
@@ -294,7 +294,7 @@ const messages = {
   async joinLogsMessage(
     newMember: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       const joinMessage = new Discord.MessageEmbed()
         .setTitle('Wejście użytkownika')
         .setThumbnail(newMember.user.avatarURL()!)
@@ -311,7 +311,7 @@ const messages = {
   async leaveLogsMessage(
     oldMember: Discord.GuildMember
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       const leaveMessage = new Discord.MessageEmbed()
         .setTitle('Wyjście użytkownika')
         .setThumbnail(oldMember.user.avatarURL()!)
@@ -329,7 +329,7 @@ const messages = {
     oldMessage: Discord.Message,
     newMessage: Discord.Message
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let oldMsg = oldMessage.content;
       let newMsg = newMessage.content;
       if (oldMsg.length > 300) {
@@ -362,7 +362,7 @@ const messages = {
   async deleteLogsMessage(
     deletedMessage: Discord.Message
   ): Promise<Discord.MessageEmbed> {
-    return new Promise<Discord.MessageEmbed>((resolve) => {
+    return new Promise<Discord.MessageEmbed>(resolve => {
       let message = deletedMessage.content;
       if (message!.length > 600) {
         message = message!.slice(0, 600);
