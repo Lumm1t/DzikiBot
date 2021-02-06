@@ -1,9 +1,9 @@
 import * as Discord from 'discord.js';
-import background from './background';
-import classified from './classified';
-import EndingMessage from './commands/endMessages';
-import * as Handlers from './commands/export';
-import database from './database';
+import background from '../background';
+import classified from '../classified';
+import EndingMessage from '../commands/endMessages';
+import * as Handlers from '../commands/export';
+import database from '../database';
 
 const bot = classified.bot;
 
