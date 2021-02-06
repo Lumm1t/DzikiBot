@@ -1,5 +1,5 @@
 import Classified from './classified';
-import commandsManager from './commandsManager';
+import commandsManager from './managers/commandsManager';
 
 const bot = Classified.bot;
 
