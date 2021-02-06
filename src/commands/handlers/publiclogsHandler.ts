@@ -1,16 +1,14 @@
-import * as Discord from 'discord.js';
-import database from '../../database';
-import EndingMessage from '../endMessages';
+import * as Imports from '../import';
 
-async function setChannel(msg: Discord.Message): Promise<void> {
+async function setChannel(msg: Imports.Discord.Message): Promise<void> {
   if (!msg.member!.hasPermission('ADMINISTRATOR')) {
-    throw EndingMessage.NoPermissions;
+    throw Imports.EndingMessage.NoPermissions;
   }
   const channel = msg.mentions.channels.first();
   if (!channel || channel.type != 'text') {
     throw 'Musisz oznaczyć kanał tekstowy. $publicznelogi #kanał';
   }
-  database.setPublicLogs(msg, channel);
-  throw EndingMessage.SuccessfulSetPublicLogs + channel.name;
+  Imports.database.setPublicLogChannel(msg, channel);
+  throw Imports.EndingMessage.SuccessfulSetPublicLogs + channel.name;
 }
 export default setChannel;

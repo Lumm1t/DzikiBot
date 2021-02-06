@@ -1,9 +1,7 @@
-import * as Discord from 'discord.js';
-import background from '../../background';
-import database from '../../database';
+import * as Imports from '../import';
 
 async function setStatChannel(
-  msg: Discord.Message,
+  msg: Imports.Discord.Message,
   args: string[]
 ): Promise<void> {
   const msgAuthor = msg.member!;
@@ -12,16 +10,19 @@ async function setStatChannel(
     const channel = msg.guild?.channels.cache.get(channelID);
     if (channel) {
       if (channel.type == 'voice') {
-        await database.setStatistic(msg, args[1], channel);
-        background.drd(msg, 'Udane ustawienie statystyki na: ' + channel.name);
+        await Imports.database.setStatistic(msg, args[1], channel);
+        Imports.background.drd(
+          msg,
+          'Udane ustawienie statystyki na: ' + channel.name
+        );
       } else {
-        background.drd(msg, 'Podany kanał musi być kanałem głosowym');
+        Imports.background.drd(msg, 'Podany kanał musi być kanałem głosowym');
       }
     } else {
-      background.drd(msg, 'Błędne ID kanału');
+      Imports.background.drd(msg, 'Błędne ID kanału');
     }
   } else {
-    background.drd(msg, 'Nie posiadasz uprawnień');
+    Imports.background.drd(msg, 'Nie posiadasz uprawnień');
   }
 }
 export default setStatChannel;

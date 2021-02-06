@@ -1,9 +1,6 @@
-import * as Discord from 'discord.js';
-import background from '../../background';
-import database from '../../database';
-import EndingMessage from '../endMessages';
+import * as Imports from '../import';
 
-async function ShowList(msg: Discord.Message, channelsList: string) {
+async function ShowList(msg: Imports.Discord.Message, channelsList: string) {
   if (channelsList) {
     const channels: string[] = channelsList.split(',');
     channels.pop(); // last index of table is always ','
@@ -13,46 +10,46 @@ async function ShowList(msg: Discord.Message, channelsList: string) {
     channels.forEach(channelID => {
       const channel = msg.guild!.channels.cache.get(
         channelID
-      ) as Discord.TextChannel;
+      ) as Imports.Discord.TextChannel;
       if (channel) {
         message += `${i}. : ${channel.id} : ${channel.name}\n`;
       } else {
         message += `${i}. : ${channelID} : Nie znaleziono kanału\n`;
       }
       if (i == MESSAGE_LENGTH_LIMIT) {
-        msg.channel.send(background.formatMessage(message));
+        msg.channel.send(Imports.background.formatMessage(message));
         message = '';
       }
       i++;
     });
-    msg.channel.send(background.formatMessage(message));
+    msg.channel.send(Imports.background.formatMessage(message));
   } else {
-    throw EndingMessage.BlacklistNullException;
+    throw Imports.EndingMessage.BlacklistNullException;
   }
 }
 
-async function addChannel(msg: Discord.Message, channelsList: string) {
+async function addChannel(msg: Imports.Discord.Message, channelsList: string) {
   const channel = msg.mentions.channels.first();
   if (!channel || channel.type != 'text') {
-    throw EndingMessage.BlacklistchannelException;
+    throw Imports.EndingMessage.BlacklistchannelException;
   }
   if (channelsList) {
     const channels: string[] = channelsList.split(',');
     if (channels.length > 49) {
-      throw EndingMessage.BlacklistLengthException;
+      throw Imports.EndingMessage.BlacklistLengthException;
     }
     if (channels.indexOf(channel.id) != -1) {
-      throw EndingMessage.BlacklistChannelInDB;
+      throw Imports.EndingMessage.BlacklistChannelInDB;
     }
-    database.setBlacklist(msg.guild!, channelsList + channel.id + ',');
+    Imports.database.setBlacklist(msg.guild!, channelsList + channel.id + ',');
   } else {
-    database.setBlacklist(msg.guild!, channel.id + ',');
+    Imports.database.setBlacklist(msg.guild!, channel.id + ',');
   }
-  throw EndingMessage.BlacklistChannelAdded;
+  throw Imports.EndingMessage.BlacklistChannelAdded;
 }
 
 async function deleteChannel(
-  msg: Discord.Message,
+  msg: Imports.Discord.Message,
   args: string[],
   channelsList: string
 ) {
@@ -60,22 +57,25 @@ async function deleteChannel(
     const channels: string[] = channelsList.split(',');
     const channel = args[2];
     if (channels.indexOf(channel) == -1) {
-      throw EndingMessage.BlacklistChannelNotInDB;
+      throw Imports.EndingMessage.BlacklistChannelNotInDB;
     }
     const newChannelList = channelsList.replace(channel + ',', '');
-    database.setBlacklist(msg.guild!, newChannelList);
+    Imports.database.setBlacklist(msg.guild!, newChannelList);
     throw `Kanał o ID: ${channel} został pomyślnie usunięty`;
   } else {
-    throw EndingMessage.BlacklistNullException;
+    throw Imports.EndingMessage.BlacklistNullException;
   }
 }
 
-async function blacklist(msg: Discord.Message, args: string[]): Promise<void> {
+async function blacklist(
+  msg: Imports.Discord.Message,
+  args: string[]
+): Promise<void> {
   const msgAuthor = msg.member!;
   if (!msgAuthor.hasPermission('ADMINISTRATOR')) {
-    throw EndingMessage.NoPermissions;
+    throw Imports.EndingMessage.NoPermissions;
   }
-  const channelsList = await database.getBlacklist(msg.guild!);
+  const channelsList = await Imports.database.getBlacklist(msg.guild!);
   switch (args[1]) {
     case 'list': {
       ShowList(msg, channelsList);
@@ -89,7 +89,7 @@ async function blacklist(msg: Discord.Message, args: string[]): Promise<void> {
       break;
     }
     default:
-      throw EndingMessage.BlacklistArgsException;
+      throw Imports.EndingMessage.BlacklistArgsException;
   }
 }
 export default blacklist;

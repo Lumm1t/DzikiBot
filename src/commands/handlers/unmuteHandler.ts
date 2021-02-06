@@ -1,31 +1,28 @@
-import * as Discord from 'discord.js';
-import background from '../../background';
-import database from '../../database';
-import EndingMessage from '../endMessages';
+import * as Imports from '../import';
 
 async function unmute(
-  msg: Discord.Message,
-  logChannel: Discord.TextChannel
+  msg: Imports.Discord.Message,
+  logChannel: Imports.Discord.TextChannel
 ): Promise<void> {
   const subject = msg.mentions.members?.first();
   const msgAuthor = msg.member!;
   const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
 
   if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
-    throw EndingMessage.NoPermissions;
+    throw Imports.EndingMessage.NoPermissions;
   }
   if (!subject) {
-    throw EndingMessage.IncorrectUserData;
+    throw Imports.EndingMessage.IncorrectUserData;
   }
   if (role == undefined) {
-    throw EndingMessage.MutedRoleNotFound;
+    throw Imports.EndingMessage.MutedRoleNotFound;
   }
 
   subject.roles.remove(role);
   logChannel.send(
     `<@${subject!.id}> został odmutowany przez: <@${msg.member!.id}>!`
   );
-  database.unmute(subject);
-  background.waitAndDelete(msg, 10000);
+  Imports.database.setUnmute(subject);
+  Imports.background.waitAndDelete(msg, 10000);
 }
 export default unmute;
