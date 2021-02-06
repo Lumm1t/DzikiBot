@@ -3,7 +3,7 @@ import background from '../background';
 import classified from '../classified';
 import EndingMessage from '../commands/endMessages';
 import * as Handlers from '../commands/export';
-import database from '../database';
+import * as database from '../database/export';
 
 const bot = classified.bot;
 
@@ -18,7 +18,7 @@ const commandsManager = {
       if (!msg.guild!.me!.hasPermission('ADMINISTRATOR')) {
         throw 'Potrzebuję uprawnień administratora do poprawnego działania.';
       }
-      const channelID = await database.getLogChannel(msg.guild!.id);
+      const channelID = await database.getPublicLogChannel(msg.guild!.id);
       const channel = bot.channels.cache.get(channelID);
       if (args[0] == 'publicznelogi') {
         Handlers.publiclogsHandler(msg);
