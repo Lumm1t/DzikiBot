@@ -30,7 +30,7 @@ const classified = {
         logging: false,
       }
     );
-
+    sequelize.authenticate();
     return sequelize;
   },
 };
