@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function setUnmute(subject: Imports.Discord.GuildMember): Promise<void> {
   const user = await Imports.models.users.findOne({

@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function getMutedUsers(): Promise<[string[], string[]]> {
   const time = await Imports.modules.setEndingDate('0m', 'db', true);
