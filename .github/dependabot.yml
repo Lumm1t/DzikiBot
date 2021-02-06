@@ -9,10 +9,8 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - MrDzik
-      - lumm1t
     assignees:
       - MrDzik
-      - lumm1t
     commit-message:
       prefix: fix
       prefix-development: chore
@@ -26,10 +24,8 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - MrDzik
-      - lumm1t
     assignees:
       - MrDzik
-      - lumm1t
     commit-message:
       prefix: fix
       prefix-development: chore
