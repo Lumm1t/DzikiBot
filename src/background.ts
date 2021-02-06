@@ -1,9 +1,8 @@
 import * as Discord from 'discord.js';
 import messages from './messages';
-import database from './database';
+import * as database from './database/export';
 import modules from './modules';
 import Classified from './classified';
-
 const bot = Classified.bot;
 
 /* eslint-disable no-case-declarations */
@@ -172,9 +171,9 @@ async function autoRemoveLimitations(): Promise<void> {
               const role = server.roles.cache.filter(r => r.name === 'Muted');
 
               if (role) {
-                database.unmute(user);
+                database.setUnmute(user);
                 user.roles.remove(role);
-                database.getLogChannel(server.id).then(channelID => {
+                database.getPublicLogChannel(server.id).then(channelID => {
                   const publicLogChannel = server!.channels.cache.get(
                     channelID
                   ) as Discord.TextChannel;
@@ -204,8 +203,7 @@ async function autoRemoveLimitations(): Promise<void> {
             } catch (error) {
               console.error(error);
             }
-
-            database.removeBan(server.id, usersID[i]);
+            database.setUnban(server.id, usersID[i]);
           }
         }
         ++i;
@@ -352,13 +350,15 @@ const background = {
 
 bot.on('guildMemberAdd', newMember => {
   const server = newMember.guild;
-
-  database.muteCheck(newMember).then(() => {
-    const role = server.roles.cache.find(r => r.name === 'Muted');
-    if (role) {
-      newMember.roles.add(role);
-    }
-  });
+  database
+    .getMuteInfo(newMember)
+    .then(() => {
+      const role = server.roles.cache.find(r => r.name === 'Muted');
+      if (role) {
+        newMember.roles.add(role);
+      }
+    })
+    .catch();
 
   database.getPrivateLogChannel(server.id).then(channelID => {
     const logChannel = server.channels.cache.get(
@@ -391,7 +391,6 @@ bot.on('guildMemberRemove', oldMember => {
 
 bot.on('messageUpdate', async (oldMessage, newMessage) => {
   const channelsList = await database.getBlacklist(oldMessage.guild!);
-
   if (channelsList) {
     const channels: string[] = channelsList.split(',');
     channels.pop(); // last index of table is always ','
@@ -494,6 +493,7 @@ bot.on('ready', () => {
   background.statistics();
   autoRemoveLimitations();
   statusBar();
+  Classified.classified.getSeq();
 });
 
 export default background;
