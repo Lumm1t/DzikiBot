@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function getBlacklist(server: Imports.Discord.Guild): Promise<string> {
   const guild = await Imports.models.servers.findOne({
