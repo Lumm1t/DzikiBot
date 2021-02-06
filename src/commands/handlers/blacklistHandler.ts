@@ -70,28 +70,26 @@ async function deleteChannel(
   }
 }
 
-const blacklistHandler = {
-  async blacklist(msg: Discord.Message, args: string[]): Promise<void> {
-    const msgAuthor = msg.member!;
-    if (!msgAuthor.hasPermission('ADMINISTRATOR')) {
-      throw EndingMessage.NoPermissions;
+async function blacklist(msg: Discord.Message, args: string[]): Promise<void> {
+  const msgAuthor = msg.member!;
+  if (!msgAuthor.hasPermission('ADMINISTRATOR')) {
+    throw EndingMessage.NoPermissions;
+  }
+  const channelsList = await database.getBlacklist(msg.guild!);
+  switch (args[1]) {
+    case 'list': {
+      ShowList(msg, channelsList);
+      break;
     }
-    const channelsList = await database.getBlacklist(msg.guild!);
-    switch (args[1]) {
-      case 'list': {
-        ShowList(msg, channelsList);
-        break;
-      }
-      case 'dodaj':
-        addChannel(msg, channelsList);
-        break;
-      case 'usun': {
-        deleteChannel(msg, args, channelsList);
-        break;
-      }
-      default:
-        throw EndingMessage.BlacklistArgsException;
+    case 'dodaj':
+      addChannel(msg, channelsList);
+      break;
+    case 'usun': {
+      deleteChannel(msg, args, channelsList);
+      break;
     }
-  },
-};
-export default blacklistHandler;
+    default:
+      throw EndingMessage.BlacklistArgsException;
+  }
+}
+export default blacklist;

@@ -21,7 +21,7 @@ const commandsManager = {
       const channelID = await database.getLogChannel(msg.guild!.id);
       const channel = bot.channels.cache.get(channelID);
       if (args[0] == 'publicznelogi') {
-        Handlers.publiclogsHandler.setChannel(msg);
+        Handlers.publiclogsHandler(msg);
       } else if (args[0] == 'pomoc' || args[0] == 'help') {
         throw EndingMessage.DocsMessage;
       }
@@ -31,40 +31,40 @@ const commandsManager = {
       const publicLogChannel = channel as Discord.TextChannel;
       switch (args[0]) {
         case 'kick':
-          Handlers.kickHandler.kick(msg, args, publicLogChannel);
+          Handlers.kickHandler(msg, args, publicLogChannel);
           break;
         case 'ban':
-          Handlers.banHandler.ban(msg, args, publicLogChannel);
+          Handlers.banHandler(msg, args, publicLogChannel);
           break;
         case 'mute':
-          Handlers.muteHandler.mute(msg, args, publicLogChannel);
+          Handlers.muteHandler(msg, args, publicLogChannel);
           break;
         case 'unmute':
-          Handlers.unmuteHandler.unmute(msg, publicLogChannel);
+          Handlers.unmuteHandler(msg, publicLogChannel);
           break;
         case 'tempban':
-          Handlers.tempbanHandler.tempban(msg, args, publicLogChannel);
+          Handlers.tempbanHandler(msg, args, publicLogChannel);
           break;
         case 'warn':
-          Handlers.warnHandler.warn(msg, args, publicLogChannel);
+          Handlers.warnHandler(msg, args, publicLogChannel);
           break;
         case 'mutetime':
-          Handlers.mutetimeHandler.mutetime(msg, args);
+          Handlers.mutetimeHandler(msg, args);
           break;
         case 'prywatnelogi':
-          Handlers.privatelogsHandler.setPrivateLogs(msg);
+          Handlers.privatelogsHandler(msg);
           break;
         case 'statystyki':
-          Handlers.statsHandler.setStatChannel(msg, args);
+          Handlers.statsHandler(msg, args);
           break;
         case 'blacklist':
-          Handlers.blacklistHandler.blacklist(msg, args);
+          Handlers.blacklistHandler(msg, args);
           break;
         case 'mention':
-          Handlers.mentionHandler.mention(msg, args);
+          Handlers.mentionHandler(msg, args);
           break;
         case 'ogłoś':
-          Handlers.announceHandler.announce(msg, args);
+          Handlers.announceHandler(msg, args);
           break;
       }
     } catch (err) {
