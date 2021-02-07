@@ -1,10 +1,10 @@
 import Classified from './classified';
-import commandsManager from './managers/commandsManager';
+import messageHandler from './eventsHandlers/onMessageHandler';
 
 const bot = Classified.bot;
 
 bot.on('message', msg => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {
-    commandsManager.msgProcessor(msg);
+    messageHandler(msg);
   }
 });
