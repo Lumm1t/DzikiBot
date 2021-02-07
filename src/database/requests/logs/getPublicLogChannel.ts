@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function getLogChannel(serverID: string): Promise<string> {
   const guild = await Imports.models.servers.findOne({

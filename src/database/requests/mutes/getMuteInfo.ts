@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function getMuteInfo(
   newMember: Imports.Discord.GuildMember

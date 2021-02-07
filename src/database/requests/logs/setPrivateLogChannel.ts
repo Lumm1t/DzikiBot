@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function setPrivateLogChannel(
   msg: Imports.Discord.Message,

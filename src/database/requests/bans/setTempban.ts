@@ -1,4 +1,4 @@
-import * as Imports from '../import';
+import * as Imports from '../../import';
 
 async function setTempBan(
   msg: Imports.Discord.Message,
