@@ -1,16 +1,16 @@
-import banHandler from './handlers/banHandler';
-import kickHandler from './handlers/kickHandler';
-import muteHandler from './handlers/muteHandler';
-import unmuteHandler from './handlers/unmuteHandler';
-import tempbanHandler from './handlers/tempbanHandler';
-import warnHandler from './handlers/warnHandler';
-import mutetimeHandler from './handlers/mutetimeHandler';
-import privatelogsHandler from './handlers/privatelogsHandler';
-import statsHandler from './handlers/statsHandler';
-import blacklistHandler from './handlers/blacklistHandler';
-import mentionHandler from './handlers/mentionHandler';
-import announceHandler from './handlers/announceHandler';
-import publiclogsHandler from './handlers/publiclogsHandler';
+import banHandler from './handlers/ban';
+import kickHandler from './handlers/kick';
+import muteHandler from './handlers/mute';
+import unmuteHandler from './handlers/unmute';
+import tempbanHandler from './handlers/tempban';
+import warnHandler from './handlers/warn';
+import mutetimeHandler from './handlers/mutetime';
+import privatelogsHandler from './handlers/privatelogs';
+import statsHandler from './handlers/stats';
+import blacklistHandler from './handlers/blacklist';
+import mentionHandler from './handlers/mention';
+import announceHandler from './handlers/announce';
+import publiclogsHandler from './handlers/publiclogs';
 export {
   banHandler,
   kickHandler,
