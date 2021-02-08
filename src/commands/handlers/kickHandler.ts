@@ -1,9 +1,9 @@
-import * as Imports from '../import';
+import { Discord, background, EndingMessage, messages } from '../import';
 
 async function kick(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   args: string[],
-  logChannel: Imports.Discord.TextChannel
+  logChannel: Discord.TextChannel
 ): Promise<void> {
   const subject = msg.mentions.members?.first();
   const msgAuthor = msg.member!;
@@ -12,19 +12,14 @@ async function kick(
     msgAuthor.hasPermission('KICK_MEMBERS') ||
     subject?.hasPermission('ADMINISTRATOR')
   ) {
-    throw Imports.EndingMessage.NoPermissionOrUserIsAdmin;
+    throw EndingMessage.NoPermissionOrUserIsAdmin;
   }
   if (!subject) {
-    throw Imports.EndingMessage.IncorrectUserData;
+    throw EndingMessage.IncorrectUserData;
   }
 
-  const delivered = await Imports.background.sendDMmessage(
-    msg,
-    args,
-    subject,
-    1
-  );
-  const kickMessage = await Imports.messages.kickServerMessage(
+  const delivered = await background.sendDMmessage(msg, args, subject, 1);
+  const kickMessage = await messages.kickServerMessage(
     msg,
     args,
     subject,
@@ -32,6 +27,6 @@ async function kick(
   );
   logChannel.send(kickMessage);
   subject.kick();
-  Imports.background.waitAndDelete(msg, 10000);
+  background.waitAndDelete(msg, 10000);
 }
 export default kick;

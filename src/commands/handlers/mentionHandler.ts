@@ -1,22 +1,19 @@
-import * as Imports from '../import';
+import { Discord, modules, EndingMessage } from '../import';
 
-async function mention(
-  msg: Imports.Discord.Message,
-  args: string[]
-): Promise<void> {
+async function mention(msg: Discord.Message, args: string[]): Promise<void> {
   const msgAuthor = msg.member!;
   const member = msg.mentions.members?.first();
   if (!msgAuthor.hasPermission('ADMINISTRATOR')) {
-    throw Imports.EndingMessage.NoPermissions;
+    throw EndingMessage.NoPermissions;
   }
   if (!member) {
-    throw Imports.EndingMessage.IncorrectUserData;
+    throw EndingMessage.IncorrectUserData;
   }
   if (!args[2]) {
-    throw Imports.EndingMessage.MentionArgException;
+    throw EndingMessage.MentionArgException;
   }
   if (!/^[1-9][0-9]?$/i.test(args[2])) {
-    throw Imports.EndingMessage.MentionNumberException;
+    throw EndingMessage.MentionNumberException;
   }
   let reason = '';
   for (let i = 3; i < args.length; i++) {
@@ -24,7 +21,7 @@ async function mention(
   }
   for (let i = 0; i < Number(args[2]); i++) {
     msg.channel.send(`${member} ${reason}`);
-    await Imports.modules.delay(2000);
+    await modules.delay(2000);
   }
 }
 export default mention;

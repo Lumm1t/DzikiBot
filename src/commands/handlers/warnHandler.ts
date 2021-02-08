@@ -1,28 +1,35 @@
-import * as Imports from '../import';
+import {
+  Discord,
+  database,
+  background,
+  modules,
+  EndingMessage,
+  messages,
+} from '../import';
 
 async function warn(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   args: string[],
-  logChannel: Imports.Discord.TextChannel
+  logChannel: Discord.TextChannel
 ): Promise<void> {
   const subject = msg.mentions.members?.first();
   const msgAuthor = msg.member!;
   const role = msg.guild!.roles.cache.find(r => r.name === 'Muted');
 
   if (!msgAuthor.hasPermission('MANAGE_MESSAGES')) {
-    throw Imports.EndingMessage.NoPermissions;
+    throw EndingMessage.NoPermissions;
   }
   if (!subject) {
-    throw Imports.EndingMessage.IncorrectUserData;
+    throw EndingMessage.IncorrectUserData;
   }
   if (role == undefined) {
-    throw Imports.EndingMessage.MutedRoleNotFound;
+    throw EndingMessage.MutedRoleNotFound;
   }
 
-  const time = await Imports.modules.setEndingDate('3d', 'db', false);
-  const warnCount = await Imports.database.setAndGetWarn(subject, time);
+  const time = await modules.setEndingDate('3d', 'db', false);
+  const warnCount = await database.setAndGetWarn(subject, time);
   if (warnCount != 3) {
-    const warnMessage = await Imports.messages.warnMessage(
+    const warnMessage = await messages.warnMessage(
       msg,
       args,
       subject,
@@ -30,19 +37,19 @@ async function warn(
       '0'
     );
     logChannel.send(warnMessage);
-    Imports.background.waitAndDelete(msg, 10000);
+    background.waitAndDelete(msg, 10000);
   } else {
-    const muteTime = await Imports.database.getWarnTime(msg);
-    let date = await Imports.modules.setEndingDate(muteTime, 'text', true);
+    const muteTime = await database.getWarnTime(msg);
+    let date = await modules.setEndingDate(muteTime, 'text', true);
 
     if (!['0m', '0h', '0d'].includes(muteTime)) {
-      Imports.database.setMute(msg, muteTime);
+      database.setMute(msg, muteTime);
       subject.roles.add(role);
     } else {
       date = '0';
     }
 
-    const warnMessage = await Imports.messages.warnMessage(
+    const warnMessage = await messages.warnMessage(
       msg,
       args,
       subject,

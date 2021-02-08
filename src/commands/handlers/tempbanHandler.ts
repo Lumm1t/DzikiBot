@@ -1,9 +1,15 @@
-import * as Imports from '../import';
+import {
+  Discord,
+  database,
+  EndingMessage,
+  background,
+  messages,
+} from '../import';
 
 async function tempban(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   args: string[],
-  logChannel: Imports.Discord.TextChannel
+  logChannel: Discord.TextChannel
 ): Promise<void> {
   const subject = msg.mentions.members?.first();
   const msgAuthor = msg.member!;
@@ -11,21 +17,16 @@ async function tempban(
     !msgAuthor.hasPermission('KICK_MEMBERS') ||
     subject?.hasPermission('ADMINISTRATOR')
   ) {
-    throw Imports.EndingMessage.NoPermissionOrUserIsAdmin;
+    throw EndingMessage.NoPermissionOrUserIsAdmin;
   }
 
   if (!subject) {
-    throw Imports.EndingMessage.IncorrectUserData;
+    throw EndingMessage.IncorrectUserData;
   }
 
-  await Imports.database.setTempban(msg, args);
-  const delivered = await Imports.background.sendDMmessage(
-    msg,
-    args,
-    subject,
-    3
-  );
-  const tempBanMessage = await Imports.messages.tempBanMessage(
+  await database.setTempban(msg, args);
+  const delivered = await background.sendDMmessage(msg, args, subject, 3);
+  const tempBanMessage = await messages.tempBanMessage(
     msg,
     args,
     subject,
@@ -34,6 +35,6 @@ async function tempban(
 
   logChannel.send(tempBanMessage);
   subject.ban();
-  Imports.background.waitAndDelete(msg, 10000);
+  background.waitAndDelete(msg, 10000);
 }
 export default tempban;

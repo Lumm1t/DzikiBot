@@ -1,9 +1,9 @@
-import * as Imports from '../import';
+import { Discord, background, EndingMessage, messages } from '../import';
 
 async function ban(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   args: string[],
-  logChannel: Imports.Discord.TextChannel
+  logChannel: Discord.TextChannel
 ): Promise<void> {
   const subject = msg.mentions.members?.first();
   const msgAuthor = msg.member!;
@@ -12,19 +12,14 @@ async function ban(
     !msgAuthor.hasPermission('BAN_MEMBERS') ||
     subject?.hasPermission('ADMINISTRATOR')
   ) {
-    throw Imports.EndingMessage.NoPermissionOrUserIsAdmin;
+    throw EndingMessage.NoPermissionOrUserIsAdmin;
   }
   if (!subject) {
-    throw Imports.EndingMessage.IncorrectUserData;
+    throw EndingMessage.IncorrectUserData;
   }
 
-  const delivered = await Imports.background.sendDMmessage(
-    msg,
-    args,
-    subject,
-    2
-  );
-  const banMessage = await Imports.messages.banServerMessage(
+  const delivered = await background.sendDMmessage(msg, args, subject, 2);
+  const banMessage = await messages.banServerMessage(
     msg,
     args,
     subject,
@@ -32,6 +27,6 @@ async function ban(
   );
   logChannel.send(banMessage);
   subject.ban();
-  Imports.background.waitAndDelete(msg, 10000);
+  background.waitAndDelete(msg, 10000);
 }
 export default ban;
