@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node .",
+    "start": "node --trace-warnings .",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore"
   },
   "author": "MrDzik#8720",
