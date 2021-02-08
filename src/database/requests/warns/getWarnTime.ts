@@ -1,7 +1,7 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
-async function getWarnTime(msg: Imports.Discord.Message): Promise<string> {
-  const guild = await Imports.models.servers.findOne({
+async function getWarnTime(msg: Discord.Message): Promise<string> {
+  const guild = await models.servers.findOne({
     where: {
       serwer: msg.guild!.id,
     },

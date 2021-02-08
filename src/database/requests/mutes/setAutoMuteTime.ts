@@ -1,10 +1,10 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
 async function setAutoMuteTime(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   args: string[]
 ): Promise<string> {
-  const guild = await Imports.models.servers.findOne({
+  const guild = await models.servers.findOne({
     where: {
       serwer: msg.guild!.id,
     },

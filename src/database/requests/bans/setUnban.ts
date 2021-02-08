@@ -1,7 +1,7 @@
-import * as Imports from '../../import';
+import { models } from '../../import';
 
 async function setUnban(serverID: string, userID: string): Promise<void> {
-  const user = await Imports.models.users.findOne({
+  const user = await models.users.findOne({
     where: {
       serwer: serverID,
       uzytkownik: userID,

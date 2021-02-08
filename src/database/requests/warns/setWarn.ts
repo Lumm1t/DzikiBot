@@ -1,4 +1,4 @@
-import * as Imports from '../../import';
+import { models } from '../../import';
 
 async function setWarn(
   serverID: string,
@@ -6,7 +6,7 @@ async function setWarn(
   ending: string,
   warnCount: number
 ): Promise<void> {
-  const user = await Imports.models.users.findOne({
+  const user = await models.users.findOne({
     where: {
       serwer: serverID,
       uzytkownik: subjectID,

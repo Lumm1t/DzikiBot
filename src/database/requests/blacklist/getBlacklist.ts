@@ -1,7 +1,7 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
-async function getBlacklist(server: Imports.Discord.Guild): Promise<string> {
-  const guild = await Imports.models.servers.findOne({
+async function getBlacklist(server: Discord.Guild): Promise<string> {
+  const guild = await models.servers.findOne({
     where: {
       serwer: server.id,
     },

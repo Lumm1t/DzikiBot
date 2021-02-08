@@ -1,11 +1,11 @@
-import * as Imports from '../../import';
+import { Discord, models, Seq } from '../../import';
 
 async function setStatistic(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   arg: string,
-  channel: Imports.Discord.GuildChannel
+  channel: Discord.GuildChannel
 ): Promise<void> {
-  const [statistics] = await Imports.models.stats.findOrCreate({
+  const [statistics] = await models.stats.findOrCreate({
     where: {
       serwer: msg.guild!.id,
     },
@@ -16,7 +16,7 @@ async function setStatistic(
   return new Promise((resolve, reject) => {
     const insertStat = (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      statistics: Imports.Seq.Model<any, any>,
+      statistics: Seq.Model<any, any>,
       channelId: string,
       position: number,
       statName: string,

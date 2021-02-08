@@ -1,12 +1,12 @@
-import * as Imports from '../../import';
+import { Discord, modules, models } from '../../import';
 
 async function setTempBan(
-  msg: Imports.Discord.Message,
+  msg: Discord.Message,
   args: string[]
 ): Promise<string> {
-  const ending = await Imports.modules.setEndingDate(args[2], 'db', false);
+  const ending = await modules.setEndingDate(args[2], 'db', false);
   const subject = msg.mentions.members!.first()!;
-  const [user] = await Imports.models.users.findOrCreate({
+  const [user] = await models.users.findOrCreate({
     where: {
       serwer: msg.guild!.id,
       uzytkownik: subject.id,

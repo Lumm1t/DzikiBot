@@ -1,9 +1,7 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
-async function getMuteInfo(
-  newMember: Imports.Discord.GuildMember
-): Promise<string> {
-  const user = await Imports.models.users.findOne({
+async function getMuteInfo(newMember: Discord.GuildMember): Promise<string> {
+  const user = await models.users.findOne({
     where: {
       serwer: newMember.guild.id,
       uzytkownik: newMember.id,

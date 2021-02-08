@@ -1,10 +1,10 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
 async function setPublicLogChannel(
-  msg: Imports.Discord.Message,
-  channel: Imports.Discord.GuildChannel
+  msg: Discord.Message,
+  channel: Discord.GuildChannel
 ): Promise<void> {
-  const [guild] = await Imports.models.servers.findOrCreate({
+  const [guild] = await models.servers.findOrCreate({
     where: {
       serwer: msg.guild!.id,
     },

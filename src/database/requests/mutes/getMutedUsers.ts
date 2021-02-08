@@ -1,16 +1,12 @@
-import * as Imports from '../../import';
-
+import { models, modules, Seq } from '../../import';
 async function getMutedUsers(): Promise<[string[], string[]]> {
-  const time = await Imports.modules.setEndingDate('0m', 'db', true);
+  const time = await modules.setEndingDate('0m', 'db', true);
   const serversID: string[] = [];
   const usersID: string[] = [];
-  const users = await Imports.models.users.findAll({
+  const users = await models.users.findAll({
     where: {
       data_zakonczenia_muta: {
-        [Imports.Seq.Op.and]: [
-          { [Imports.Seq.Op.ne]: 0 },
-          { [Imports.Seq.Op.lte]: time },
-        ],
+        [Seq.Op.and]: [{ [Seq.Op.ne]: 0 }, { [Seq.Op.lte]: time }],
       },
     },
   });

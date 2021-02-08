@@ -1,10 +1,10 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
 async function setAndGetWarn(
-  subject: Imports.Discord.GuildMember,
+  subject: Discord.GuildMember,
   ending: string
 ): Promise<number> {
-  const [user] = await Imports.models.users.findOrCreate({
+  const [user] = await models.users.findOrCreate({
     where: {
       serwer: subject.guild.id,
       uzytkownik: subject.id,

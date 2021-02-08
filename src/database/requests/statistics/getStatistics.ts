@@ -1,4 +1,4 @@
-import * as Imports from '../../import';
+import { models, Seq } from '../../import';
 
 async function getStatistics(
   option: string,
@@ -7,9 +7,9 @@ async function getStatistics(
   const serverID: string[] = [];
   const channelID: string[] = [];
   const position: number[] = [];
-  const statistics = await Imports.models.stats.findAll({
+  const statistics = await models.stats.findAll({
     where: {
-      [option]: { [Imports.Seq.Op.ne]: null },
+      [option]: { [Seq.Op.ne]: null },
     },
   });
   let i = 0;

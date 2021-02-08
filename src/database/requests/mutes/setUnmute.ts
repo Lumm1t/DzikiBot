@@ -1,7 +1,7 @@
-import * as Imports from '../../import';
+import { Discord, models } from '../../import';
 
-async function setUnmute(subject: Imports.Discord.GuildMember): Promise<void> {
-  const user = await Imports.models.users.findOne({
+async function setUnmute(subject: Discord.GuildMember): Promise<void> {
+  const user = await models.users.findOne({
     where: {
       serwer: subject.guild.id,
       uzytkownik: subject.id,

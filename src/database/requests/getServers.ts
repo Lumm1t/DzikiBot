@@ -1,11 +1,11 @@
-import * as Imports from '../import';
+import { models, Seq } from '../import';
 
 async function getServers(): Promise<string> {
   let server = '';
-  const guilds = await Imports.models.servers.findAll({
+  const guilds = await models.servers.findAll({
     where: {
-      serwer: { [Imports.Seq.Op.ne]: '0' },
-      logi2: { [Imports.Seq.Op.ne]: null },
+      serwer: { [Seq.Op.ne]: '0' },
+      logi2: { [Seq.Op.ne]: null },
     },
   });
   guilds.forEach(data => {

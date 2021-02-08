@@ -1,12 +1,9 @@
-import * as Imports from '../../import';
+import { Discord, models, modules } from '../../import';
 
-async function setMute(
-  msg: Imports.Discord.Message,
-  arg: string
-): Promise<string> {
-  const ending = await Imports.modules.setEndingDate(arg, 'db', false);
+async function setMute(msg: Discord.Message, arg: string): Promise<string> {
+  const ending = await modules.setEndingDate(arg, 'db', false);
   const subject = msg.mentions.members!.first()!;
-  const [user] = await Imports.models.users.findOrCreate({
+  const [user] = await models.users.findOrCreate({
     where: {
       serwer: msg.guild!.id,
       uzytkownik: subject.id,
