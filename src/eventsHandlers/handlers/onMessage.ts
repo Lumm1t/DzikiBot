@@ -1,8 +1,15 @@
-import * as Imports from '../import';
+import {
+  Discord,
+  database,
+  classified,
+  EndingMessage,
+  commands,
+  background,
+} from '../import';
 
-const bot = Imports.classified.bot;
+const bot = classified.bot;
 
-async function messageHandler(msg: Imports.Discord.Message): Promise<void> {
+async function messageHandler(msg: Discord.Message): Promise<void> {
   const command = msg.content.substring(1);
   const args = command.split(' ');
   try {
@@ -12,59 +19,59 @@ async function messageHandler(msg: Imports.Discord.Message): Promise<void> {
     if (!msg.guild!.me!.hasPermission('ADMINISTRATOR')) {
       throw 'Potrzebuję uprawnień administratora do poprawnego działania.';
     }
-    const channelID = await Imports.database.getPublicLogChannel(msg.guild!.id);
+    const channelID = await database.getPublicLogChannel(msg.guild!.id);
     const channel = bot.channels.cache.get(channelID);
     if (args[0] == 'publicznelogi') {
-      Imports.commands.publiclogsHandler(msg);
+      commands.publiclogsHandler(msg);
     } else if (args[0] == 'pomoc' || args[0] == 'help') {
-      throw Imports.EndingMessage.DocsMessage;
+      throw EndingMessage.DocsMessage;
     }
     if (channel == undefined) {
-      throw Imports.EndingMessage.NoAccessToLogChannel;
+      throw EndingMessage.NoAccessToLogChannel;
     }
-    const publicLogChannel = channel as Imports.Discord.TextChannel;
+    const publicLogChannel = channel as Discord.TextChannel;
     switch (args[0]) {
       case 'kick':
-        Imports.commands.kickHandler(msg, args, publicLogChannel);
+        await commands.kickHandler(msg, args, publicLogChannel);
         break;
       case 'ban':
-        Imports.commands.banHandler(msg, args, publicLogChannel);
+        await commands.banHandler(msg, args, publicLogChannel);
         break;
       case 'mute':
-        Imports.commands.muteHandler(msg, args, publicLogChannel);
+        await commands.muteHandler(msg, args, publicLogChannel);
         break;
       case 'unmute':
-        Imports.commands.unmuteHandler(msg, publicLogChannel);
+        await commands.unmuteHandler(msg, publicLogChannel);
         break;
       case 'tempban':
-        Imports.commands.tempbanHandler(msg, args, publicLogChannel);
+        await commands.tempbanHandler(msg, args, publicLogChannel);
         break;
       case 'warn':
-        Imports.commands.warnHandler(msg, args, publicLogChannel);
+        await commands.warnHandler(msg, args, publicLogChannel);
         break;
       case 'mutetime':
-        Imports.commands.mutetimeHandler(msg, args);
+        await commands.mutetimeHandler(msg, args);
         break;
       case 'prywatnelogi':
-        Imports.commands.privatelogsHandler(msg);
+        await commands.privatelogsHandler(msg);
         break;
       case 'statystyki':
-        Imports.commands.statsHandler(msg, args);
+        await commands.statsHandler(msg, args);
         break;
       case 'blacklist':
-        Imports.commands.blacklistHandler(msg, args);
+        await commands.blacklistHandler(msg, args);
         break;
       case 'mention':
-        Imports.commands.mentionHandler(msg, args);
+        await commands.mentionHandler(msg, args);
         break;
       case 'ogłoś':
-        Imports.commands.announceHandler(msg, args);
+        await commands.announceHandler(msg, args);
         break;
     }
   } catch (err) {
     if (msg.channel.type != 'dm') {
       const reason = '$ ' + err + ' //';
-      Imports.background.drd(msg, reason);
+      background.drd(msg, reason);
     } else {
       msg.reply(err);
     }
