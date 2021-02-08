@@ -2,8 +2,8 @@ import {
   Discord,
   modules,
   database,
-  background,
   EndingMessage,
+  functions,
 } from '../import';
 
 async function mutetime(msg: Discord.Message, args: string[]): Promise<void> {
@@ -13,7 +13,7 @@ async function mutetime(msg: Discord.Message, args: string[]): Promise<void> {
   }
   await modules.setEndingDate(args[1], 'text', true);
   await database.setAutoMuteTime(msg, args);
-  background.drd(
+  functions.reply(
     msg,
     'Czas muta po 3 warnach został pomyślnie ustawiony na: ' + args[1]
   );

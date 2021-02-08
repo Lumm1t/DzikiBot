@@ -1,4 +1,4 @@
-import { Discord, database, background, EndingMessage } from '../import';
+import { Discord, database, EndingMessage, functions } from '../import';
 
 async function unmute(
   msg: Discord.Message,
@@ -23,6 +23,6 @@ async function unmute(
     `<@${subject!.id}> został odmutowany przez: <@${msg.member!.id}>!`
   );
   database.setUnmute(subject);
-  background.waitAndDelete(msg, 10000);
+  functions.waitAndDelete(msg, 10000);
 }
 export default unmute;

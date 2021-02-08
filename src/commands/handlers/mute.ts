@@ -1,9 +1,9 @@
 import {
   Discord,
   database,
-  background,
   EndingMessage,
   messages,
+  functions,
 } from '../import';
 
 async function mute(
@@ -29,13 +29,13 @@ async function mute(
     const muteMessage = await messages.permMuteMessage(msg, subject);
     subject.roles.add(role);
     logChannel.send(muteMessage);
-    background.waitAndDelete(msg, 10000);
+    functions.waitAndDelete(msg, 10000);
   } else {
     await database.setMute(msg, args[2]);
     subject.roles.add(role);
     const muteMessage = await messages.muteMessage(msg, args, subject);
     logChannel.send(muteMessage);
-    background.waitAndDelete(msg, 10000);
+    functions.waitAndDelete(msg, 10000);
   }
 }
 export default mute;

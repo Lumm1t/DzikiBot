@@ -1,6 +1,4 @@
-import { Classified, Discord, database, background } from '../import';
-
-const bot = Classified.bot;
+import { bot, Discord, database } from '../import';
 
 async function announce(msg: Discord.Message, args: string[]): Promise<void> {
   if (msg.member!.id == '355043764861140993') {
@@ -21,11 +19,15 @@ async function announce(msg: Discord.Message, args: string[]): Promise<void> {
         ) as Discord.TextChannel;
         if (channel) {
           channel.send(
-            `**@here Wiadomość od autora: **${background.formatMessage(reason)}`
+            `**@here Wiadomość od autora: **${formatMessage(reason)}`
           );
         }
       }
     });
   }
+}
+
+function formatMessage(message: string): string {
+  return '```' + message + '```';
 }
 export default announce;

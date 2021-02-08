@@ -1,10 +1,10 @@
 import {
   Discord,
   database,
-  background,
   modules,
   EndingMessage,
   messages,
+  functions,
 } from '../import';
 
 async function warn(
@@ -37,7 +37,7 @@ async function warn(
       '0'
     );
     logChannel.send(warnMessage);
-    background.waitAndDelete(msg, 10000);
+    functions.waitAndDelete(msg, 10000);
   } else {
     const muteTime = await database.getWarnTime(msg);
     let date = await modules.setEndingDate(muteTime, 'text', true);

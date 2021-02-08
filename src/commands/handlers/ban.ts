@@ -1,4 +1,4 @@
-import { Discord, background, EndingMessage, messages } from '../import';
+import { Discord, EndingMessage, messages, functions } from '../import';
 
 async function ban(
   msg: Discord.Message,
@@ -18,7 +18,7 @@ async function ban(
     throw EndingMessage.IncorrectUserData;
   }
 
-  const delivered = await background.sendDMmessage(msg, args, subject, 2);
+  const delivered = await functions.sendDMMessage(msg, args, subject, 2);
   const banMessage = await messages.banServerMessage(
     msg,
     args,
@@ -27,6 +27,6 @@ async function ban(
   );
   logChannel.send(banMessage);
   subject.ban();
-  background.waitAndDelete(msg, 10000);
+  functions.waitAndDelete(msg, 10000);
 }
 export default ban;

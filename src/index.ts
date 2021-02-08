@@ -1,8 +1,14 @@
-import Classified from './classified';
+import { bot, classified } from './classified';
 import * as Discord from 'discord.js';
 import * as eventsHandlers from './eventsHandlers/export';
+import * as modules from './functions/export';
 
-const bot = Classified.bot;
+bot.on('ready', () => {
+  modules.updateStats();
+  modules.removeLimitations();
+  modules.setStatusBar();
+  classified.getSeq();
+});
 
 bot.on('message', msg => {
   if (msg.content.startsWith('$') && !msg.member!.user.bot) {

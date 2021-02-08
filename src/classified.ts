@@ -38,4 +38,4 @@ const classified = {
 const bot: Discord.Client = new Discord.Client();
 bot.login(classified.getToken());
 
-export default { classified, bot };
+export { classified, bot };

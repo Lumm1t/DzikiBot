@@ -1,13 +1,11 @@
 import {
   Discord,
   database,
-  classified,
+  bot,
   EndingMessage,
   commands,
-  background,
+  functions,
 } from '../import';
-
-const bot = classified.bot;
 
 async function messageHandler(msg: Discord.Message): Promise<void> {
   const command = msg.content.substring(1);
@@ -71,7 +69,7 @@ async function messageHandler(msg: Discord.Message): Promise<void> {
   } catch (err) {
     if (msg.channel.type != 'dm') {
       const reason = '$ ' + err + ' //';
-      background.drd(msg, reason);
+      functions.reply(msg, reason);
     } else {
       msg.reply(err);
     }

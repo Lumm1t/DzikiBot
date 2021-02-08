@@ -1,4 +1,4 @@
-import { Discord, database, background } from '../import';
+import { Discord, database, functions } from '../import';
 
 async function setPrivateLogs(msg: Discord.Message): Promise<void> {
   const msgAuthor = msg.member!;
@@ -7,13 +7,13 @@ async function setPrivateLogs(msg: Discord.Message): Promise<void> {
     if (channel) {
       if (channel.type == 'text') {
         database.setPrivateLogChannel(msg, channel);
-        background.drd(
+        functions.reply(
           msg,
           'Udane ustawienie prywatnych logów na kanał: ' + channel.name
         );
       }
     } else {
-      background.drd(
+      functions.reply(
         msg,
         'Musisz oznaczyć kanał tekstowy. $prywatnelogi #kanał'
       );

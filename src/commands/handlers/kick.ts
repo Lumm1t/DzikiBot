@@ -1,4 +1,4 @@
-import { Discord, background, EndingMessage, messages } from '../import';
+import { Discord, EndingMessage, messages, functions } from '../import';
 
 async function kick(
   msg: Discord.Message,
@@ -18,7 +18,7 @@ async function kick(
     throw EndingMessage.IncorrectUserData;
   }
 
-  const delivered = await background.sendDMmessage(msg, args, subject, 1);
+  const delivered = await functions.sendDMMessage(msg, args, subject, 1);
   const kickMessage = await messages.kickServerMessage(
     msg,
     args,
@@ -27,6 +27,6 @@ async function kick(
   );
   logChannel.send(kickMessage);
   subject.kick();
-  background.waitAndDelete(msg, 10000);
+  functions.waitAndDelete(msg, 10000);
 }
 export default kick;

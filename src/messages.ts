@@ -1,8 +1,6 @@
 import * as Discord from 'discord.js';
 import modules from './modules';
-import classified from './classified';
-
-const bot = classified.bot;
+import { bot } from './classified';
 
 const messages = {
   getDMEmojiStatus(isSuccessful: boolean): string {

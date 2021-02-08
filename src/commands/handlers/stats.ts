@@ -1,4 +1,4 @@
-import { Discord, database, background } from '../import';
+import { Discord, database, functions } from '../import';
 
 async function setStatChannel(
   msg: Discord.Message,
@@ -11,15 +11,15 @@ async function setStatChannel(
     if (channel) {
       if (channel.type == 'voice') {
         await database.setStatistic(msg, args[1], channel);
-        background.drd(msg, 'Udane ustawienie statystyki na: ' + channel.name);
+        functions.reply(msg, 'Udane ustawienie statystyki na: ' + channel.name);
       } else {
-        background.drd(msg, 'Podany kanał musi być kanałem głosowym');
+        functions.reply(msg, 'Podany kanał musi być kanałem głosowym');
       }
     } else {
-      background.drd(msg, 'Błędne ID kanału');
+      functions.reply(msg, 'Błędne ID kanału');
     }
   } else {
-    background.drd(msg, 'Nie posiadasz uprawnień');
+    functions.reply(msg, 'Nie posiadasz uprawnień');
   }
 }
 export default setStatChannel;

@@ -2,8 +2,8 @@ import {
   Discord,
   database,
   EndingMessage,
-  background,
   messages,
+  functions,
 } from '../import';
 
 async function tempban(
@@ -25,7 +25,7 @@ async function tempban(
   }
 
   await database.setTempban(msg, args);
-  const delivered = await background.sendDMmessage(msg, args, subject, 3);
+  const delivered = await functions.sendDMMessage(msg, args, subject, 3);
   const tempBanMessage = await messages.tempBanMessage(
     msg,
     args,
@@ -35,6 +35,6 @@ async function tempban(
 
   logChannel.send(tempBanMessage);
   subject.ban();
-  background.waitAndDelete(msg, 10000);
+  functions.waitAndDelete(msg, 10000);
 }
 export default tempban;

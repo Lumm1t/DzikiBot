@@ -1,7 +1,6 @@
-import Classified from './classified';
+import { classified } from './classified';
 import * as Seq from 'sequelize';
 
-const classified = Classified.classified;
 const seq = classified.getSeq();
 
 const servers = seq.define(

@@ -1,4 +1,4 @@
-import { Discord, database, background, EndingMessage } from '../import';
+import { Discord, database, EndingMessage } from '../import';
 
 async function ShowList(msg: Discord.Message, channelsList: string) {
   if (channelsList) {
@@ -17,12 +17,12 @@ async function ShowList(msg: Discord.Message, channelsList: string) {
         message += `${i}. : ${channelID} : Nie znaleziono kanału\n`;
       }
       if (i == MESSAGE_LENGTH_LIMIT) {
-        msg.channel.send(background.formatMessage(message));
+        msg.channel.send(formatMessage(message));
         message = '';
       }
       i++;
     });
-    msg.channel.send(background.formatMessage(message));
+    msg.channel.send(formatMessage(message));
   } else {
     throw EndingMessage.BlacklistNullException;
   }
@@ -88,5 +88,9 @@ async function blacklist(msg: Discord.Message, args: string[]): Promise<void> {
     default:
       throw EndingMessage.BlacklistArgsException;
   }
+}
+
+function formatMessage(message: string): string {
+  return '```' + message + '```';
 }
 export default blacklist;
